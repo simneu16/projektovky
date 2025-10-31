@@ -1,0 +1,74 @@
+<script>
+    let editMode = false;
+
+    function toggleEdit() {
+        editMode = !editMode;
+        document.getElementById('toggleBtn').textContent = editMode ? 'Save Changes' : 'Enable Edit Mode';
+
+        const title = document.getElementById('title');
+        const paragraph = document.getElementById('paragraph');
+        const image = document.getElementById('mainImage');
+
+        title.contentEditable = editMode;
+        paragraph.contentEditable = editMode;
+        image.classList.toggle('edit-mode', editMode);
+
+        if (!editMode) {
+            // Save data to hidden inputs
+            document.getElementById('titleInput').value = title.innerText.trim();
+            document.getElementById('paragraphInput').value = paragraph.innerText.trim();
+            document.getElementById('imageInput').value = image.src;
+
+            // Submit the form
+            document.getElementById('editForm').submit();
+        }
+    }
+
+    // Allow image URL change
+    document.getElementById('mainImage').addEventListener('click', () => {
+        if (!editMode) return;
+        const newUrl = prompt("Enter new image URL:", document.getElementById('mainImage').src);
+        if (newUrl) document.getElementById('mainImage').src = newUrl;
+    });
+</script>
+
+<?php
+// --- Database connection ---
+$host = "127.0.0.1";
+$user = "postgre";     // change to your DB username
+$pass = ".lo9,ki8";         // change to your DB password
+$dbname = "unitmate";
+$port = 5432;
+
+$conn = new mysqli($host, $user, $pass, $dbname, $port);
+if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+
+// --- Handle Save Request ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $html_content = $_POST['html_content'];
+    $container = $_POST['html_container_name'];
+
+    $stmt = $conn->prepare("UPDATE infoweb_content SET html_content=? WHERE html_container_name=?");
+    $stmt->bind_param("sss", $html_content, $container);
+    $stmt->execute();
+    $stmt->close();
+
+    // Redirect to remove POST data on refresh
+    header("Location: index.php?saved=1");
+    exit;
+}
+
+// --- Load Content from DB ---
+$content = [];
+$result = $conn->query("SELECT * FROM content");
+while ($row = $result->fetch_assoc()) {
+    $content[$row['html_container_name']] = $row;
+}
+$conn->close();
+?>
+
+<?php if (isset($_GET['saved'])): ?>
+        <div style="background:#d4edda;color:#155724;padding:10px;border-radius:5px;margin-bottom:10px;">
+            ✅ Changes saved successfully.
+        </div>
+    <?php endif; ?>
