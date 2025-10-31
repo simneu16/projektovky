@@ -539,25 +539,7 @@
 
 <body>
     <!-- Navbar -->
-    <nav>
-        <div class="nav-container">
-            <a href="../index.html" class="logo">
-                <img src="../resources/img/unitmate_logo_wb.png" alt="UnitMate Logo">
-                UnitMate
-            </a>
-            <div class="menu-toggle" id="mobile-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="../index.html">Domov</a></li>
-                <li><a href="produkty.html">Produkty</a></li>
-                <li><a href="objednavky.html">Objednávky</a></li>
-                <li id="authLinkContainer"><a href="login.html">Prihlásenie</a></li>
-            </ul>
-        </div>
-    </nav>
+    <?php require './header.php'; ?>
 
 
     <!-- Orders Header -->
@@ -574,37 +556,7 @@
 
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>UnitMate</h3>
-                <p>Pokoj v každom vchode</p>
-                <p>Prinášame inteligentné riešenia pre moderné bývanie.</p>
-            </div>
-            <div class="footer-section">
-                <h3>Kontakt</h3>
-                <p>📧 info@unitmate.sk</p>
-                <p>📱 +421 900 123 456</p>
-                <p>📍 Bratislava, Slovensko</p>
-            </div>
-            <div class="footer-section">
-                <h3>Rýchle odkazy</h3>
-                <a href="../index.html">Domov</a>
-                <a href="produkty.html">Produkty</a>
-                <a href="objednavky.html">Objednávky</a>
-                <a href="login.html">Prihlásenie</a>
-            </div>
-            <div class="footer-section">
-                <h3>Sledujte nás</h3>
-                <a href="#">Facebook</a>
-                <a href="#">Instagram</a>
-                <a href="#">LinkedIn</a>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2025 UnitMate. Všetky práva vyhradené.</p>
-        </div>
-    </footer>
+    <?php require './footer.php'; ?>
 
 
     <script>
